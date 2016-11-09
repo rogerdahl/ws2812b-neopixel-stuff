@@ -160,7 +160,7 @@ Ws281xEffectSmoothRunners::Ws281xEffectSmoothRunners(Ws281xString& pixels, u8 ef
     }
 }
 
-void Ws281xEffectSmoothRunners::calcColors()
+void Ws281xEffectSmoothRunners::refresh()
 {
     for (u16 i = 0; i < pixels_.len(); ++i) {
         pixels_.set(i, Color(0x000000));

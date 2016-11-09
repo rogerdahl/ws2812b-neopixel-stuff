@@ -31,10 +31,12 @@ A variety of effects is included.
 
 #### Implementation
 
-Players and effects are implemented in C++ and use regular polymorphism. The abstraction layer is defined in two simple abstract classes. Players and effects each extend one of the classes and override a couple of pure virtual functions, allowing players and effects to communicate via virtual calls.
+Players and effects are implemented in C++ and use regular polymorphism. The abstraction layer is defined in two simple abstract classes. Players and effects each extend one of the classes and override a couple of pure virtual functions, allowing them to communicate via virtual calls.
 
-Effects provide a single function, `calcColors()` and players provide three functions, `get()`, `set()` and `len()`. The player calls `calcColors()` 50 times per second to update the LEDs. The effect then calls `len()` to find the total number of LEDs, and `get()` and `set()` to read and modify the colors of the LEDs. When receiving the calls, the player in turn interacts with the underlying LED library (using the native interface provided by the library) to read or update the LEDs.   
+Effects provide a single function, `refresh()` and players provide three functions, `get()`, `set()` and `len()`. The player calls `refresh()` 50 times per second to update the LEDs. The effect then calls `len()` to find the total number of LEDs, and `get()` and `set()` to read and modify the colors of the LEDs. When receiving the calls, the player in turn interacts with the underlying LED library (using the native interface provided by the library) to read or update the LEDs.   
 
-This approach was chosen as opposed to having `calcColors()` return an array of LED colors so that players could be implemented on uCs like the ATtiny85, which have only a few hundred bytes of free RAM and cannot fit a copy of all the LED colors in memory.    
+This approach was chosen as opposed to having `refresh()` return an array of LED colors so that players could be implemented on uCs like the ATtiny85, which have only a few hundred bytes of free RAM and cannot fit a copy of all the LED colors in memory.    
 
 Note that, though this approach makes players and effects interchangeable, it's not a plugin system. That is, the player and effects are compiled together to a single binary.
+
+On most platforms, players can be compiled with any number of the effects and can cycle through them if desired. Extremely limited platforms such as the ATtiny85 can probably store just a few effects, and the effects must carefully control their memory usage. 

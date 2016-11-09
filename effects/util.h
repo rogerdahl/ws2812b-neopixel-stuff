@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #include "int_types.h"
-#include "ws281x_shim.h"
+#include "shim.h"
 
 
 s16 wrap(s16 val, s16 maxVal);

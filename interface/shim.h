@@ -44,6 +44,6 @@ class Ws281xEffect
 {
 public:
 //    virtual Ws281xEffect(Ws281xString&) = 0;
-    virtual void calcColors() = 0;
+    virtual void refresh() = 0;
 private:
 };

@@ -15,7 +15,7 @@ Ws281xEffectEmergency::Ws281xEffectEmergency(Ws281xString& pixels, u8 numSection
     numPixelsPerSection_ = pixels_.len() / numSections;
 }
 
-void Ws281xEffectEmergency::calcColors()
+void Ws281xEffectEmergency::refresh()
 {
     Color black = Color((u8)0, (u8)0, (u8)0);
     Color red = Color((u8)0xff, (u8)0, (u8)0);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../interface/shim.h"
+#include "shim.h"
 
 class Segment
 {
@@ -18,7 +18,7 @@ class Ws281xEffectSmoothRunners : public Ws281xEffect
 {
 public:
     Ws281xEffectSmoothRunners(Ws281xString&, u8 effectIdx, u8 speedFactor);
-    void calcColors();
+    void refresh();
 private:
     void drawTaperedSegment(u16 superPos, u8 numSegmentPixels, const Color&);
     Color calcTaperedSegmentPixel(u8 numSegmentPixels, u8 pos, const Color&);

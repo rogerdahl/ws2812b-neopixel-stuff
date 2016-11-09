@@ -10,7 +10,7 @@ Ws281xEffectColorFade::Ws281xEffectColorFade(Ws281xString& pixels, u8 fadeSpeed,
 {
 }
 
-void Ws281xEffectColorFade::calcColors()
+void Ws281xEffectColorFade::refresh()
 {
     if (!fadeCur_--) {
         fadeCur_ = fadeSpeed_;

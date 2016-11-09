@@ -10,7 +10,7 @@ Ws281xEffectHsvScroll::Ws281xEffectHsvScroll(Ws281xString& pixels, float scrollS
 {
 }
 
-void Ws281xEffectHsvScroll::calcColors()
+void Ws281xEffectHsvScroll::refresh()
 {
     float p = scrollPos_;
     for (u16 i = 0; i < pixels_.len(); ++i) {
