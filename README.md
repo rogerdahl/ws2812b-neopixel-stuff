@@ -37,7 +37,7 @@ A variety of effects is included.
 
 Instructions on how to build devices that can run the players and effects.
 
-<img style="float:right;width:30%;" src="platforms/attiny85/1_top.jpg"> 
+<img style="float:right;max-width::30%;" src="platforms/attiny85/1_top.jpg"> 
 
 * [Small platform for wearable projects based on the ATTiny85](platforms/attiny85/README.md)
 
