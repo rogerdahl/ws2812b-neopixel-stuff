@@ -4,8 +4,9 @@
 
 #include "shim.h"
 
-class PixelState {
-public:
+class PixelState
+{
+  public:
   PixelState();
   PixelState(float brightness, float speed, float hsv);
   float pos;
@@ -18,15 +19,13 @@ typedef std::vector<PixelState> PixelStateVec;
 
 class Ws281xEffectShimmer : public Ws281xEffect
 {
-public:
+  public:
   Ws281xEffectShimmer(
-    Ws281xString& pixels,
-    float minBrightness, float maxBrightness,
-    float minSpeed, float maxSpeed,
-    float minHsv, float maxHsv
-  );
+    Ws281xString& pixels, float minBrightness, float maxBrightness,
+    float minSpeed, float maxSpeed, float minHsv, float maxHsv);
   void refresh();
-private:
+
+  private:
   Ws281xString& pixels_;
   float minBrightness_;
   float maxBrightness_;

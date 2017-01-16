@@ -9,10 +9,12 @@ const u8 N_PAUSE_FRAMES_MAX = 60;
 const u8 N_FLASH_FRAMES = 1;
 const u8 N_FRAMES_PER_SWAP = 60;
 
-
 Ws281xEffectXmasTwinkles::Ws281xEffectXmasTwinkles(Ws281xString& pixels)
-  : pixels_(pixels), isRedFirst_(false), nSwapFrames_(0), nFlashFrames_(0),
-    nPauseFrames_(0)
+  : pixels_(pixels)
+  , isRedFirst_(false)
+  , nSwapFrames_(0)
+  , nFlashFrames_(0)
+  , nPauseFrames_(0)
 {
 }
 

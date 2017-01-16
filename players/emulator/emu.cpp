@@ -19,4 +19,3 @@ u16 Ws281xStringEmu::len()
 {
   return static_cast<u16>(leds.size());
 }
-

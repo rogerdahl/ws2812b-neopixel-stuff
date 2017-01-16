@@ -3,12 +3,14 @@
 #include "color_fade.h"
 #include "util.h"
 
-
-Ws281xEffectColorFade::Ws281xEffectColorFade(Ws281xString& pixels, u8 fadeSpeed,
-    u8 fadeStep)
-  : pixels_(pixels), fadeSpeed_(fadeSpeed), fadeStep_(fadeStep),
-    curColor_(Color((u8)0, (u8)0, (u8)0)), targetColor_(Color((u8)0, (u8)0, (u8)0)),
-    fadeCur_(0)
+Ws281xEffectColorFade::Ws281xEffectColorFade(
+  Ws281xString& pixels, u8 fadeSpeed, u8 fadeStep)
+  : pixels_(pixels)
+  , fadeSpeed_(fadeSpeed)
+  , fadeStep_(fadeStep)
+  , curColor_(Color((u8)0, (u8)0, (u8)0))
+  , targetColor_(Color((u8)0, (u8)0, (u8)0))
+  , fadeCur_(0)
 {
 }
 
@@ -28,7 +30,6 @@ void Ws281xEffectColorFade::refresh()
   if (curColor_ == targetColor_) {
     targetColor_ = randomBrightColor();
   }
-
 }
 
 u8 Ws281xEffectColorFade::fadeChannel(u8 curChannel, u8 targetChannel)
@@ -43,4 +44,3 @@ u8 Ws281xEffectColorFade::fadeChannel(u8 curChannel, u8 targetChannel)
     return curChannel - fadeStep_;
   }
 }
-

@@ -1,17 +1,22 @@
 #include "emergency.h"
 #include "util.h"
 
-// Misc effects that are based on additively mixing colored segments. Segment and LED positions are first calculated
-// with a virtual string of LEDs that has 256x more LEDs than the physical string. These virtual "superpositions" are
+// Misc effects that are based on additively mixing colored segments. Segment
+// and LED positions are first calculated
+// with a virtual string of LEDs that has 256x more LEDs than the physical
+// string. These virtual "superpositions" are
 // then averaged to determine the colors for the physical LEDs.
 
 const u16 numOnFrames = 4;
 const u16 numOffFrames = 2;
 const u16 numCyclesPerColor = 6;
 
-Ws281xEffectEmergency::Ws281xEffectEmergency(Ws281xString& pixels,
-    u8 numSections, u8 param)
-  : pixels_(pixels), numSections_(numSections), param_(param), numCurFrame(0)
+Ws281xEffectEmergency::Ws281xEffectEmergency(
+  Ws281xString& pixels, u8 numSections, u8 param)
+  : pixels_(pixels)
+  , numSections_(numSections)
+  , param_(param)
+  , numCurFrame(0)
 {
   numPixelsPerSection_ = pixels_.len() / numSections;
 }

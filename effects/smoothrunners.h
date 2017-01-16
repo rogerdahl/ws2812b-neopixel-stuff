@@ -4,7 +4,7 @@
 
 class Segment
 {
-public:
+  public:
   Segment();
   Segment(const Color& color_in, s16 speed_in, u8 lengthPercent_in);
   Color color;
@@ -16,10 +16,11 @@ const int maxSegments = 20;
 
 class Ws281xEffectSmoothRunners : public Ws281xEffect
 {
-public:
+  public:
   Ws281xEffectSmoothRunners(Ws281xString&, u8 effectIdx, u8 speedFactor);
   void refresh();
-private:
+
+  private:
   void drawTaperedSegment(u16 superPos, u8 numSegmentPixels, const Color&);
   Color calcTaperedSegmentPixel(u8 numSegmentPixels, u8 pos, const Color&);
   void addPixelColor(u16 pixelPos, const Color& addColor);
@@ -35,4 +36,3 @@ private:
 
   u8 speedFactor_;
 };
-

@@ -97,9 +97,9 @@ Color randomHsvColor()
 
 Color fromHsv(float h, float s, float v)
 {
-//  assert(h >= 0.0f && h <= 360.0f);
-//  assert(s >= 0.0f && s <= 1.0f);
-//  assert(v >= 0.0f && v <= 1.0f);
+  //  assert(h >= 0.0f && h <= 360.0f);
+  //  assert(s >= 0.0f && s <= 1.0f);
+  //  assert(v >= 0.0f && v <= 1.0f);
 
   h = clamp(h, 0.0f, 360.0f);
   s = clamp(s, 0.0f, 1.0f);

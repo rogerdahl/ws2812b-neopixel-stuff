@@ -7,7 +7,7 @@
 // Abstraction for colors.
 class Color
 {
-public:
+  public:
   Color();
   Color(u8 r, u8 g, u8 b);
   Color(int r, int g, int b);
@@ -23,7 +23,8 @@ public:
   u8 r;
   u8 g;
   u8 b;
-private:
+
+  private:
   void copy(const Color&);
   u8 colorChannelClampedAdd(u8 a, u8 b);
 };
@@ -32,21 +33,23 @@ private:
 // colors in a library independent way.
 class Ws281xString
 {
-public:
-//    virtual Ws281xString(u16 numPixels) = 0;
+  public:
+  //    virtual Ws281xString(u16 numPixels) = 0;
   virtual void set(u16 pixelIdx, const Color&) = 0;
   virtual Color get(u16 pixelIdx) = 0;
   virtual u16 len() = 0;
-private:
+
+  private:
 };
 
 // Algorithms that calculate pixel colors for effects for pixel strips, rings
 // and grids derive from this class and implement the virtual functions.
 class Ws281xEffect
 {
-public:
-//    virtual Ws281xEffect(Ws281xString&) = 0;
-//  virtual ~Ws281xEffect() = 0;
+  public:
+  //    virtual Ws281xEffect(Ws281xString&) = 0;
+  //  virtual ~Ws281xEffect() = 0;
   virtual void refresh() = 0;
-private:
+
+  private:
 };

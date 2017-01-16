@@ -1,12 +1,16 @@
-### WS2812B / Adafruit NeoPixel RGB LED players and effects
+### WS2812B / Adafruit NeoPixel RGB LED players, effects and platforms
 
-There are many platforms and libraries for controlling WS2812B / Adafruit NeoPixel RGB LEDs. However, they're all slightly different, so code written for one platform and library won't work on any other without modifications. This project defines an abstraction layer that allows separating code that controls WS1212B into "players" and "effects", and implements various components of each type.
+**Note**: Work in progress. For any questions, feel free to [create an issue](https://github.com/rogerdahl/ws2812b-neopixel-stuff/issues/new).
 
-**Players:** Players are platform and library specific. Implementing a player for a given platform and library allows the platform to run all effects, without modifying any code in the effects.  
+There are many platforms and libraries for controlling WS2812B / Adafruit NeoPixel RGB LEDs. However, they're all slightly different, so code written for one platform and library won't work on any other without modifications. This project defines an abstraction layer that allows separating code that controls WS1212B into **players** and **effects**, and implements various components of each type. Also included are instructions for how to build **platforms** that can run the players and effects.
 
-**Effects:** Effects are platform agnostic. An effect implements an animation by describing how the color of each LED should change over time. After implementing an effect, it can be used on any platform for which there is a player.
+**Players**: Players are platform and library specific. Implementing a player for a given platform and library allows the platform to run all effects, without modifying any code in the effects.  
 
- 
+**Effects**: Effects are platform agnostic. An effect implements an animation by describing how the color of each LED should change over time. After implementing an effect, it can be used on any platform for which there is a player.
+
+**Platforms**: Physical devices that can run the players.
+
+  
 #### Players
 
 This project currently contains players for the following platforms:
@@ -27,6 +31,13 @@ This project currently contains players for the following platforms:
 #### Effects
  
 A variety of effects is included. 
+
+
+#### Platforms
+
+Instructions on how to build devices that can run the players and effects.
+
+
 
 
 #### Implementation

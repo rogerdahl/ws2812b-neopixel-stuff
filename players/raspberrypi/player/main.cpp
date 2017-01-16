@@ -3,22 +3,21 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string>
+#include <unistd.h>
 #include <vector>
 
-#include <ws2811.h>
 #include <wiringPi.h>
+#include <ws2811.h>
 
 #include "../../../interface/shim.h"
-#include "smoothrunners.h"
-#include "hsv_scroll.h"
 #include "color_fade.h"
-#include "xmas_twinkles.h"
+#include "hsv_scroll.h"
 #include "shimmer.h"
+#include "smoothrunners.h"
+#include "xmas_twinkles.h"
 
 #include "util.h"
-
 
 using namespace std;
 
@@ -39,7 +38,7 @@ static void ctrl_c_handler(int signum);
 
 class Ws281xStringRPi : public Ws281xString
 {
-public:
+  public:
   Ws281xStringRPi(u16 channelIdx);
 
   void set(u16 pixelIdx, const Color&);
@@ -48,7 +47,7 @@ public:
 
   u16 len();
 
-private:
+  private:
   u16 channelIdx_;
 };
 
@@ -84,7 +83,8 @@ void clampLight(u8 stringIdx, int clamp);
 void dimLight(u8 stringIdx, float light_factor);
 void reverse(Ws281xString& effect);
 
-// rsync -av . pi6w:ws281x && ssh pi6w "pkill -e main; true" && ssh pi6w "cd ws281x/rpi_ws281x && ./make.sh && ./main"
+// rsync -av . pi6w:ws281x && ssh pi6w "pkill -e main; true" && ssh pi6w "cd
+// ws281x/rpi_ws281x && ./make.sh && ./main"
 
 int main(int argc, char** argv)
 {
@@ -122,7 +122,8 @@ int main(int argc, char** argv)
     return 0;
   }
 
-  // If RGB values are provided on the command line, set all LEDs to that color and exit.
+  // If RGB values are provided on the command line, set all LEDs to that color
+  // and exit.
   if (argc == 4) {
     int r = atoi(argv[1]);
     int g = atoi(argv[2]);
@@ -131,7 +132,7 @@ int main(int argc, char** argv)
       leds.channel[0].leds[i] = r << 16 | g << 8 | b;
       leds.channel[1].leds[i] = r << 16 | g << 8 | b;
     }
-//    clampLight(0, 128);
+    //    clampLight(0, 128);
     selectAllLines();
     ws2811_render(&leds);
     ws2811_fini(&leds);
@@ -142,7 +143,7 @@ int main(int argc, char** argv)
 
   while (1) {
     u16 runSec = 1 * 60;
-//    u16 runSec = 5;
+    //    u16 runSec = 5;
 
     Ws281xStringRPi strip(1);
 
@@ -161,11 +162,10 @@ int main(int argc, char** argv)
 
     for (int j = 0; j < 4; ++j) {
       auto shimmerEffect = new Ws281xEffectShimmer(
-        strip,
-        0.0f, 1.0f, // brightness
+        strip, 0.0f, 1.0f, // brightness
         0.01f, 0.02f, // speed
         minHsv, maxHsv // hsv
-      );
+        );
       v.push_back(shimmerEffect);
     }
 
@@ -179,7 +179,6 @@ int main(int argc, char** argv)
       v.push_back(new Ws281xEffectXmasTwinkles(strip));
     }
     runEffectVec(v, strip, runSec);
-
 
     // Slow color fade.
     Ws281xEffectColorFade effectColorFade0(strip, 5, 1);
@@ -209,11 +208,11 @@ int main(int argc, char** argv)
       }
     }
 
-//    // Emergency
-//    for (int i = 1; i <= 8; ++i) {
-//      Ws281xEffectEmergency effectEmergency0(string0, i, 0);
-//      runEffect(effectEmergency0, runSec);
-//    }
+    //    // Emergency
+    //    for (int i = 1; i <= 8; ++i) {
+    //      Ws281xEffectEmergency effectEmergency0(string0, i, 0);
+    //      runEffect(effectEmergency0, runSec);
+    //    }
   }
 
   return 0;
@@ -324,16 +323,19 @@ void selectAllLines()
 void clampLight(u8 stringIdx, int clamp)
 {
   for (int i = 0; i < NUM_LEDS; ++i) {
-    leds.channel[stringIdx].leds[i] = Color::clampBrightness(
-      Color(leds.channel[stringIdx].leds[i]), clamp).rgb();
+    leds.channel[stringIdx].leds[i]
+      = Color::clampBrightness(Color(leds.channel[stringIdx].leds[i]), clamp)
+          .rgb();
   }
 }
 
 void dimLight(u8 stringIdx, float light_factor)
 {
   for (int i = 0; i < NUM_LEDS; ++i) {
-    leds.channel[stringIdx].leds[i] = Color::dimLightOutput(Color(
-      leds.channel[stringIdx].leds[i]), light_factor).rgb();
+    leds.channel[stringIdx].leds[i]
+      = Color::dimLightOutput(
+          Color(leds.channel[stringIdx].leds[i]), light_factor)
+          .rgb();
   }
 }
 
@@ -345,4 +347,3 @@ void reverse(Ws281xString& effect)
     effect.set(effect.len() - i - 1, c);
   }
 }
-

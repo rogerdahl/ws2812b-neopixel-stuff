@@ -4,10 +4,11 @@
 
 class Ws281xEffectXmasTwinkles : public Ws281xEffect
 {
-public:
+  public:
   Ws281xEffectXmasTwinkles(Ws281xString&);
   void refresh();
-private:
+
+  private:
   Ws281xString& pixels_;
   bool isRedFirst_;
   u8 nSwapFrames_;
@@ -15,4 +16,3 @@ private:
   u8 nPauseFrames_;
   s16 twinkleLedIdx;
 };
-
