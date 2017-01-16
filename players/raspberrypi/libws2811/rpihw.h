@@ -33,18 +33,18 @@
 
 
 typedef struct {
-    uint32_t type;
+  uint32_t type;
 #define RPI_HWVER_TYPE_UNKNOWN                   0
 #define RPI_HWVER_TYPE_PI1                       1
 #define RPI_HWVER_TYPE_PI2                       2
-    uint32_t hwver;
-    uint32_t periph_base;
-    uint32_t videocore_base;
-    char *desc;
+  uint32_t hwver;
+  uint32_t periph_base;
+  uint32_t videocore_base;
+  char* desc;
 } rpi_hw_t;
 
 
-const rpi_hw_t *rpi_hw_detect(void);
+const rpi_hw_t* rpi_hw_detect(void);
 
 
 #endif /* __RPIHW_H__ */

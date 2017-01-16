@@ -2,64 +2,74 @@
 #include "stdio.h"
 //#include "print_stacktrace.h"
 
+Color::Color()
+{}
+
 Color::Color(u8 r_in, u8 g_in, u8 b_in)
-: r(r_in), g(g_in), b(b_in)
+  : r(r_in), g(g_in), b(b_in)
+{
+}
+
+Color::Color(int r_in, int g_in, int b_in)
+  : r(r_in), g(g_in), b(b_in)
 {
 }
 
 Color::Color(float r_in, float g_in, float b_in)
-: r(r_in * 255), g(g_in * 255), b(b_in * 255)
+  : r(r_in * 255), g(g_in * 255), b(b_in * 255)
 {
 //    print_stacktrace();
 }
 
 Color::Color(u32 rgb)
 {
-    b = rgb;
-    g = rgb >> 8;
-    r = rgb >> 16;
+  b = rgb;
+  g = rgb >> 8;
+  r = rgb >> 16;
 }
 
 Color::Color(const Color& c)
 {
-    copy(c);
+  copy(c);
 }
 
 bool Color::operator==(const Color& c)
 {
-    return c.r == r && c.g == g && c.b == b;
+  return c.r == r && c.g == g && c.b == b;
 }
 
-Color& Color::operator=(const Color &c)
+Color& Color::operator=(const Color& c)
 {
-    copy(c);
-    return *this;
+  copy(c);
+  return *this;
 }
 
 u32 Color::rgb() const
 {
-    return r << 16 | g << 8 | b;
+  return r << 16 | g << 8 | b;
 }
 
 void Color::additiveMix(const Color& c)
 {
-    r = colorChannelClampedAdd(r, c.r);
-    g = colorChannelClampedAdd(g, c.g);
-    b = colorChannelClampedAdd(b, c.b);
+  r = colorChannelClampedAdd(r, c.r);
+  g = colorChannelClampedAdd(g, c.g);
+  b = colorChannelClampedAdd(b, c.b);
 }
 
-void Color::copy(const Color& c) {
-    r = c.r;
-    g = c.g;
-    b = c.b;
+void Color::copy(const Color& c)
+{
+  r = c.r;
+  g = c.g;
+  b = c.b;
 }
 
-u8 Color::colorChannelClampedAdd(u8 a, u8 b) {
-    u16 c = a + b;
-    if (c > 255) {
-        c = 255;
-    }
-    return c;
+u8 Color::colorChannelClampedAdd(u8 a, u8 b)
+{
+  u16 c = a + b;
+  if (c > 255) {
+    c = 255;
+  }
+  return c;
 }
 
 // For some effects, such as rainbows, one can get more brightness by clamping the combined light output from the red,
@@ -75,17 +85,19 @@ u8 Color::colorChannelClampedAdd(u8 a, u8 b) {
 // This has the nice effect of also clamping the total power consumption of a LED (or string of LEDs), while (if the
 // clamp value is 255), also allowing a single channel to be displayed at its maximum possible brightness. This function
 // can be used in combination with the regular brightness setting.
-Color Color::clampLightOutput(const Color& c, u16 clamp)
+Color Color::clampBrightness(const Color& c, u16 clamp)
 {
-    u16 combined = c.r + c.g + c.b;
-    if (combined <= clamp) {
-        return Color(c);
-    }
-    float clamp_factor = (float)clamp / combined;
-    return Color((u8)(c.r * clamp_factor), (u8)(c.g * clamp_factor), (u8)(c.b * clamp_factor));
+  u16 combined = c.r + c.g + c.b;
+  if (combined <= clamp) {
+    return Color(c);
+  }
+  float clamp_factor = (float)clamp / combined;
+  return Color((u8)(c.r * clamp_factor), (u8)(c.g * clamp_factor),
+               (u8)(c.b * clamp_factor));
 }
 
 Color Color::dimLightOutput(const Color& c, float light_factor)
 {
-    return Color((u8)(c.r * light_factor), (u8)(c.g * light_factor), (u8)(c.b * light_factor));
+  return Color((u8)(c.r * light_factor), (u8)(c.g * light_factor),
+               (u8)(c.b * light_factor));
 }

@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string>
+#include <vector>
 
 #include <ws2811.h>
 #include <wiringPi.h>
@@ -12,9 +14,11 @@
 #include "smoothrunners.h"
 #include "hsv_scroll.h"
 #include "color_fade.h"
+#include "xmas_twinkles.h"
+#include "shimmer.h"
 
-#include <string>
-#include <vector>
+#include "util.h"
+
 
 using namespace std;
 
@@ -33,11 +37,12 @@ static void setup_handlers(void);
 
 static void ctrl_c_handler(int signum);
 
-class Ws281xStringRPi : public Ws281xString {
+class Ws281xStringRPi : public Ws281xString
+{
 public:
   Ws281xStringRPi(u16 channelIdx);
 
-  void set(u16 pixelIdx, const Color &);
+  void set(u16 pixelIdx, const Color&);
 
   Color get(u16 pixelIdx);
 
@@ -52,14 +57,14 @@ Ws281xStringRPi::Ws281xStringRPi(u16 channelIdx)
   channelIdx_ = channelIdx;
 }
 
-void Ws281xStringRPi::set(u16 pixelIdx, const Color &color)
+void Ws281xStringRPi::set(u16 pixelIdx, const Color& color)
 {
   leds.channel[channelIdx_].leds[pixelIdx] = color.rgb();
 }
 
 Color Ws281xStringRPi::get(u16 pixelIdx)
 {
-  return Color((u32) (leds.channel[channelIdx_].leds[pixelIdx]));
+  return Color((u32)(leds.channel[channelIdx_].leds[pixelIdx]));
 }
 
 u16 Ws281xStringRPi::len()
@@ -67,21 +72,21 @@ u16 Ws281xStringRPi::len()
   return NUM_LEDS;
 }
 
-typedef vector<Ws281xEffect *> EffectPtrVec;
+typedef vector<Ws281xEffect*> EffectPtrVec;
 
 void initLines();
 void selectLine(int lineIdx);
 void selectAllLines();
-void runEffect(Ws281xEffect &effect, u16 runSec);
-void runEffectVec(EffectPtrVec &effectPtrVec, Ws281xString &strip, u16 runSec);
-void runEffectCopy(Ws281xEffect &effect, u16 runSec);
+void runEffect(Ws281xEffect& effect, u16 runSec);
+void runEffectVec(EffectPtrVec& effectPtrVec, Ws281xString& strip, u16 runSec);
+void runEffectCopy(Ws281xEffect& effect, u16 runSec);
 void clampLight(u8 stringIdx, int clamp);
 void dimLight(u8 stringIdx, float light_factor);
-void reverse(Ws281xString &effect);
+void reverse(Ws281xString& effect);
 
 // rsync -av . pi6w:ws281x && ssh pi6w "pkill -e main; true" && ssh pi6w "cd ws281x/rpi_ws281x && ./make.sh && ./main"
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   leds.freq = TARGET_FREQ;
   leds.dmanum = DMA;
@@ -133,11 +138,48 @@ int main(int argc, char **argv)
     return 0;
   }
 
+  EffectPtrVec v;
+
   while (1) {
-    u16 runSec = 3 * 60;
-//        u16 runSec = 5;
+    u16 runSec = 1 * 60;
+//    u16 runSec = 5;
 
     Ws281xStringRPi strip(1);
+
+    // Shimmer
+
+    for (auto e : v) {
+      delete e;
+    }
+
+    v.clear();
+
+    float hsvWidth = random_f(0.0f, 310.0f);
+    float limitHsv = 319.9f - hsvWidth;
+    float minHsv = random_f(0.0f, limitHsv);
+    float maxHsv = minHsv + hsvWidth;
+
+    for (int j = 0; j < 4; ++j) {
+      auto shimmerEffect = new Ws281xEffectShimmer(
+        strip,
+        0.0f, 1.0f, // brightness
+        0.01f, 0.02f, // speed
+        minHsv, maxHsv // hsv
+      );
+      v.push_back(shimmerEffect);
+    }
+
+    runEffectVec(v, strip, runSec);
+
+    continue;
+
+    // Xmas twinkles
+    EffectPtrVec v;
+    for (int j = 0; j < 4; ++j) {
+      v.push_back(new Ws281xEffectXmasTwinkles(strip));
+    }
+    runEffectVec(v, strip, runSec);
+
 
     // Slow color fade.
     Ws281xEffectColorFade effectColorFade0(strip, 5, 1);
@@ -190,7 +232,7 @@ void ctrl_c_handler(int signum)
   ws2811_fini(&leds);
 }
 
-void runEffect(Ws281xEffect &effect, u16 runSec)
+void runEffect(Ws281xEffect& effect, u16 runSec)
 {
   for (int i = 0; i < runSec * numFramesPerSecond; ++i) {
     effect.refresh();
@@ -204,7 +246,7 @@ void runEffect(Ws281xEffect &effect, u16 runSec)
   }
 }
 
-void runEffectVec(EffectPtrVec &effectPtrVec, Ws281xString &strip, u16 runSec)
+void runEffectVec(EffectPtrVec& effectPtrVec, Ws281xString& strip, u16 runSec)
 {
   for (int i = 0; i < runSec * numFramesPerSecond / 4; ++i) {
     for (int j = 0; j < effectPtrVec.size(); ++j) {
@@ -225,7 +267,7 @@ void runEffectVec(EffectPtrVec &effectPtrVec, Ws281xString &strip, u16 runSec)
   }
 }
 
-void runEffectCopy(Ws281xEffect &effect, u16 runSec)
+void runEffectCopy(Ws281xEffect& effect, u16 runSec)
 {
   selectAllLines();
   for (int i = 0; i < runSec * numFramesPerSecond; ++i) {
@@ -257,11 +299,14 @@ void selectLine(int lineIdx)
   digitalWrite(6, LOW);
   if (lineIdx == 0) {
     digitalWrite(0, HIGH);
-  } else if (lineIdx == 1) {
+  }
+  else if (lineIdx == 1) {
     digitalWrite(4, HIGH);
-  } else if (lineIdx == 2) {
+  }
+  else if (lineIdx == 2) {
     digitalWrite(5, HIGH);
-  } else if (lineIdx == 3) {
+  }
+  else if (lineIdx == 3) {
     digitalWrite(6, HIGH);
   }
 }
@@ -279,19 +324,20 @@ void selectAllLines()
 void clampLight(u8 stringIdx, int clamp)
 {
   for (int i = 0; i < NUM_LEDS; ++i) {
-    leds.channel[stringIdx].leds[i] = Color::clampLightOutput(Color(leds.channel[stringIdx].leds[i]), clamp).rgb();
+    leds.channel[stringIdx].leds[i] = Color::clampBrightness(
+      Color(leds.channel[stringIdx].leds[i]), clamp).rgb();
   }
 }
 
 void dimLight(u8 stringIdx, float light_factor)
 {
   for (int i = 0; i < NUM_LEDS; ++i) {
-    leds.channel[stringIdx].leds[i] = Color::dimLightOutput(Color(leds.channel[stringIdx].leds[i]),
-                                                            light_factor).rgb();
+    leds.channel[stringIdx].leds[i] = Color::dimLightOutput(Color(
+      leds.channel[stringIdx].leds[i]), light_factor).rgb();
   }
 }
 
-void reverse(Ws281xString &effect)
+void reverse(Ws281xString& effect)
 {
   for (int i = 0; i < effect.len() / 2; ++i) {
     Color c = effect.get(i);

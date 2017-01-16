@@ -1,27 +1,52 @@
 #include "xmas_twinkles.h"
+#include "util.h"
 
-void xmasRedGreenTwinkles(u16 runSec)
+// Alternate red and green. White flashes.
+
+const u8 N_PAUSE_FRAMES_MIN = 10;
+const u8 N_PAUSE_FRAMES_MAX = 60;
+
+const u8 N_FLASH_FRAMES = 1;
+const u8 N_FRAMES_PER_SWAP = 60;
+
+
+Ws281xEffectXmasTwinkles::Ws281xEffectXmasTwinkles(Ws281xString& pixels)
+  : pixels_(pixels), isRedFirst_(false), nSwapFrames_(0), nFlashFrames_(0),
+    nPauseFrames_(0)
 {
-    const u8 flashDelayMsec = 20;
-    const u8 flashPauseMsec = 150;
-    const u8 numTwinklesPerSwap = 3;
-    bool redOrGreenFirst = false;
-    u32 startMsec = millis();
-    u8 numTwinklesToNextSwap = 0;
-    while (millis() < startMsec + runSec * 1000UL) {
-        if (!numTwinklesToNextSwap--) {
-            numTwinklesToNextSwap = numTwinklesPerSwap;
-            redOrGreenFirst = !redOrGreenFirst;
-        }
-        u8 twinkleLedIdx = random(0, pixels.numPixels() - 1);
-        pixels.setPixelColor(twinkleLedIdx, 0xffffff);
-        pixels.show();
-        delay(flashDelayMsec);
-        for (u8 i = 0; i < pixels.numPixels(); ++i) {
-            u32 c = (i + redOrGreenFirst) & 1 ? 0xff0000 : 0x00ff00;
-            pixels.setPixelColor(i, c);
-        }
-        pixels.show();
-        delay(flashPauseMsec);
+}
+
+void Ws281xEffectXmasTwinkles::refresh()
+{
+  if (!nSwapFrames_--) {
+    nSwapFrames_ = N_FRAMES_PER_SWAP;
+    isRedFirst_ = !isRedFirst_;
+  }
+
+  if (!nPauseFrames_--) {
+    nPauseFrames_ = random(N_PAUSE_FRAMES_MIN, N_PAUSE_FRAMES_MAX);
+    twinkleLedIdx = random(0, pixels_.len() - 1);
+    nFlashFrames_ = N_FLASH_FRAMES;
+  }
+
+  if (nFlashFrames_) {
+    --nFlashFrames_;
+  }
+  else {
+    twinkleLedIdx = -1;
+  }
+
+  for (s16 i = 0; i < pixels_.len(); ++i) {
+    Color c;
+    if (i == twinkleLedIdx) {
+      c = Color(255, 255, 255);
     }
+    else if ((i + isRedFirst_) & 1) {
+      c = Color(255, 0, 0);
+    }
+    else {
+      c = Color(0, 255, 0);
+    }
+    pixels_.set(i, c);
+  }
 }
