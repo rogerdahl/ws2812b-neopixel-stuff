@@ -1,4 +1,6 @@
-#### WS1812B Emulator and Effect Player
+### WS1812B Emulator and Effect Player
+
+<img align="right" width="50%" src="screenshot.png">   
 
 This is a cross-platform player and development tool for effects for [WS2812B / Adafruit NeoPixel RGB LEds](https://www.adafruit.com/datasheets/WS2812B.pdf).
  
@@ -8,7 +10,7 @@ Strip, Grid and Ring layouts are supported for the on-screen rendering of the LE
 
 This was used for developing some NeoPixel patterns for a DigiSpark ATtiny85. The DigiSpark is a convenient platform for running battery powered blinky lights but is not so convenient for development as it must be unplugged and plugged back into the USB port each time the code is updated (which can easily be hundreds of times when tweaking parameters for animated effects, etc). 
 
-#### Setup and Use
+#### Building
 
 The app should compile and run on any platform where GLFW is available, such as Linux, Mac and Windows.     
 
