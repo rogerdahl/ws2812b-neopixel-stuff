@@ -22,7 +22,7 @@ This project currently contains players for the following platforms:
     * For wearables and stationary displays, depending on which STM32 is used
    
 
-* [Player for Raspberry Pi](players/raspberrypi/README.md)
+* [Player for Raspberry Pi](players/raspberrypi)
     * For high-powered stationary displays running many LEDs and/or running animations as part of a larger system, such as dynamically updated stock tickers.
 
 <img align="right" width="30%" src="players/emulator/screenshot.png">   
@@ -30,7 +30,7 @@ This project currently contains players for the following platforms:
 * [Player and Emulator for Windows, Linux, Mac, Pi](players/emulator/README.md)
     * Emulates the LEDs by drawing them on screen using OpenGL
     * Enables fast effect development and debugging
-    * Cross-platform. Tested on Windows and Linux
+    * Cross-platform, tested on Windows and Linux
 
 
 #### Effects
