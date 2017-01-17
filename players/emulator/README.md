@@ -10,6 +10,8 @@ Strip, Grid and Ring layouts are supported for the on-screen rendering of the LE
 
 This was used for developing some NeoPixel patterns for a DigiSpark ATtiny85. The DigiSpark is a convenient platform for running battery powered blinky lights but is not so convenient for development as it must be unplugged and plugged back into the USB port each time the code is updated (which can easily be hundreds of times when tweaking parameters for animated effects, etc). 
 
+See the [main page](https://github.com/rogerdahl/ws2812b-neopixel-stuff) for more information on players, effects, and how to build platforms that can run these.
+
 #### Building
 
 The app should compile and run on any platform where GLFW is available, such as Linux, Mac and Windows.     
