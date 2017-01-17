@@ -10,22 +10,26 @@ There are many platforms and libraries for controlling WS2812B / Adafruit NeoPix
 
 **Platforms**: Physical devices that can run the players.
 
-  
 #### Players
 
 This project currently contains players for the following platforms:
  
-* Atmel AVR ATtiny85 (Arduino) with the NeoPixel library by Adafruit
-    * Ideal for DIY wearables
-  
+* Atmel AVR ATtiny85 with the NeoPixel library from Adafruit
+    * For DIY wearables
+
+
 * STMicroelectronics STM32 with the *** library by ***
-    * Ideal for wearables and stationary displays, depending on which STM32 is used
+    * For wearables and stationary displays, depending on which STM32 is used
    
-* Raspberry Pi with the ws2811 library by Jeremy Garff
-    * Ideal for high-powered stationary displays running many LEDs and/or running animations as part of a larger system, such as dynamically updated stock tickers.
+
+* [Raspberry Pi )
+    * For high-powered stationary displays running many LEDs and/or running animations as part of a larger system, such as dynamically updated stock tickers.
    
-* Linux and Windows PC with LEDs emulated by drawing them on screen using OpenGL
-    * Ideal for effects development due to fast compile times 
+
+* [Cross-platform Emulator](players/raspberrypi/README.md)
+    * Emulates the LEDs by drawing them on screen using OpenGL]()
+    * Enables fast effect development and debugging
+    * Tested on Windows and Linux
 
 
 #### Effects
@@ -44,12 +48,12 @@ Instructions on how to build devices that can run the players and effects.
 
 #### Implementation
 
-Players and effects are implemented in C++ and use regular polymorphism. The abstraction layer is defined in two simple abstract classes. Players and effects each extend one of the classes and override a couple of pure virtual functions, allowing them to communicate via virtual calls.
+Players and effects are implemented in C++ and use regular polymorphism. The abstraction layer is defined in two simple abstract base classes. Players and effects each extend one of the classes and override a couple of pure virtual functions, allowing them to communicate via virtual calls.
 
 Effects provide a single function, `refresh()` and players provide three functions, `get()`, `set()` and `len()`. The player calls `refresh()` 50 times per second to update the LEDs. The effect then calls `len()` to find the total number of LEDs, and `get()` and `set()` to read and modify the colors of the LEDs. When receiving the calls, the player in turn interacts with the underlying LED library (using the native interface provided by the library) to read or update the LEDs.   
 
-This approach was chosen as opposed to having `refresh()` return an array of LED colors so that players could be implemented on uCs like the ATtiny85, which have only a few hundred bytes of free RAM and cannot fit a copy of all the LED colors in memory.    
+This approach was chosen as opposed to having `refresh()` return an array of LED colors so that players could be implemented on μCs like the ATtiny85, which have only a few hundred bytes of free RAM and cannot fit a copy of all the LED colors in memory.    
 
-Note that, though this approach makes players and effects interchangeable, it's not a plugin system. That is, the player and effects are compiled together to a single binary.
+Note that this is not a plugin system. The approach makes players and effects interchangeable, but the player and effects are combined to a single binary at compile time.
 
 On most platforms, players can be compiled with any number of the effects and can cycle through them if desired. Extremely limited platforms such as the ATtiny85 can probably store just a few effects, and the effects must carefully control their memory usage. 

@@ -1,8 +1,4 @@
-#### NeoPixel Emulator
-
-<img align="right" width="50%" src="./screenshot.png">
-
-**Note**: Work in progress. For any questions, feel free to [create an issue](https://github.com/rogerdahl/ws2812b-neopixel-stuff/issues/new).
+#### WS1812B Emulator and Effect Player
 
 This is a cross-platform player and development tool for effects for [WS2812B / Adafruit NeoPixel RGB LEds](https://www.adafruit.com/datasheets/WS2812B.pdf).
  
