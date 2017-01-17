@@ -26,11 +26,11 @@ This project currently contains players for the following platforms:
     * For high-powered stationary displays running many LEDs and/or running animations as part of a larger system, such as dynamically updated stock tickers.
 
 
-* [Atmel AVR ATtiny85](players/attiny85)
+* [Player for Atmel AVR ATtiny85](players/attiny85)
     * For DIY wearables
 
 
-* [STMicroelectronics STM32](players/stm32)
+* [Player for STMicroelectronics STM32](players/stm32)
     * For wearables and stationary displays, depending on which version of the STM32 μC is used
    
 
