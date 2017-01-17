@@ -27,7 +27,7 @@ This project currently contains players for the following platforms:
 
 <img align="right" width="30%" src="players/emulator/screenshot.png">   
 
-* [Player and Emulator for Windows, Linux, Mac, Pi](players/emulator/README.md)
+* [Player and Emulator for Windows, Linux, Mac, Pi](players/emulator)
     * Emulates the LEDs by drawing them on screen using OpenGL
     * Enables fast effect development and debugging
     * Cross-platform, tested on Windows and Linux
@@ -44,7 +44,7 @@ Instructions on how to build devices that can run the players and effects.
 
 <img align="right" width="30%" src="platforms/attiny85/1_top.jpg">
 
-* [Small platform for wearable projects based on the ATTiny85](platforms/attiny85/README.md)
+* [Small platform for wearable projects based on the ATTiny85](platforms/attiny85)
 
 
 #### Implementation
