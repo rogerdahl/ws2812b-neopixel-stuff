@@ -14,18 +14,6 @@ There are many platforms and libraries for controlling WS2812B / Adafruit NeoPix
 
 This project currently contains players for the following platforms:
  
-* [Atmel AVR ATtiny85](players/attiny85)
-    * For DIY wearables
-
-
-* [STMicroelectronics STM32](players/stm32)
-    * For wearables and stationary displays, depending on which version of the STM32 μC is used
-   
-
-* [Player for Raspberry Pi](players/raspberrypi)
-    * For high-powered stationary displays running many LEDs and/or running animations as part of a larger system, such as dynamically updated stock tickers.
-
-
 <img align="right" width="30%" src="players/emulator/screenshot.png">   
 
 * [Player and Emulator for Windows, Linux, Mac, Pi](players/emulator)
@@ -33,6 +21,18 @@ This project currently contains players for the following platforms:
     * Enables fast effect development and debugging
     * Cross-platform, tested on Windows and Linux
 
+
+* [Player for Raspberry Pi](players/raspberrypi)
+    * For high-powered stationary displays running many LEDs and/or running animations as part of a larger system, such as dynamically updated stock tickers.
+
+
+* [Atmel AVR ATtiny85](players/attiny85)
+    * For DIY wearables
+
+
+* [STMicroelectronics STM32](players/stm32)
+    * For wearables and stationary displays, depending on which version of the STM32 μC is used
+   
 
 #### Effects
  
