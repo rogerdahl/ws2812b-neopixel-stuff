@@ -2,7 +2,7 @@
 
 <img align="right" width="50%" src="screenshot.png">   
 
-This is a cross-platform player and development tool for effects for [WS2812B / Adafruit NeoPixel RGB LEds](https://www.adafruit.com/datasheets/WS2812B.pdf).
+This is a cross-platform player and development tool for effects for [WS2812B / Adafruit NeoPixel RGB LEDs](https://www.adafruit.com/datasheets/WS2812B.pdf).
  
 Instead of writing to actual WS2812B LEDs, this program renders the LEDs on screen using OpenGL. This allows effects to be created, compiled, linked and debugged directly on a PC. This speeds up the development cycle and allows for easy debugging of WS2812B blinkenlight effects. The finished effects can then be played on any of the other platform specific players included with this project.
 
