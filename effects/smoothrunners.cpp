@@ -7,26 +7,21 @@
 // string. These virtual "superpositions" are
 // then averaged to determine the colors for the physical LEDs.
 
-const u32 brightColors[]
-  = { 0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0x00ffff, 0xff00ff };
+const u32 brightColors[] = { 0xff0000, 0x00ff00, 0x0000ff,
+                             0xffff00, 0x00ffff, 0xff00ff };
 
-Segment::Segment()
-  : color(Color(0))
+Segment::Segment() : color(Color(0))
 {
 }
 
 Segment::Segment(const Color& color_in, s16 speed_in, u8 lengthPercent_in)
-  : color(color_in)
-  , speed(speed_in)
-  , lengthPercent(lengthPercent_in)
+  : color(color_in), speed(speed_in), lengthPercent(lengthPercent_in)
 {
 }
 
 Ws281xEffectSmoothRunners::Ws281xEffectSmoothRunners(
-  Ws281xString& pixels, u8 effectIdx, u8 speedFactor)
-  : pixels_(pixels)
-  , effectIdx_(effectIdx)
-  , speedFactor_(speedFactor)
+    Ws281xString& pixels, u8 effectIdx, u8 speedFactor)
+  : pixels_(pixels), effectIdx_(effectIdx), speedFactor_(speedFactor)
 {
   switch (effectIdx) {
   case 0: {
@@ -162,8 +157,8 @@ void Ws281xEffectSmoothRunners::refresh()
 
   for (u8 i = 0; i < numSegments_; ++i) {
     u16 superPos = superPosBuf_[i];
-    superPos = wrapAdd(
-      superPos, segmentArr[i].speed / speedFactor_, numSuperPositions);
+    superPos =
+        wrapAdd(superPos, segmentArr[i].speed / speedFactor_, numSuperPositions);
     superPosBuf_[i] = superPos;
     u8 numSegmentPixels = segmentArr[i].lengthPercent * pixels_.len() / 100;
     if (numSegmentPixels < 2) {
@@ -174,7 +169,7 @@ void Ws281xEffectSmoothRunners::refresh()
 }
 
 void Ws281xEffectSmoothRunners::drawTaperedSegment(
-  u16 superPos, u8 numSegmentPixels, const Color& c)
+    u16 superPos, u8 numSegmentPixels, const Color& c)
 {
   u8 shiftPos = superPos & 0xff;
   u8 pixelPos = superPos >> 8;
@@ -202,7 +197,7 @@ void Ws281xEffectSmoothRunners::drawTaperedSegment(
 //   single step = 255 / 4 = 63
 //   steps for 7 pixels: 64, 127, 191, 255, 191, 127, 64
 Color Ws281xEffectSmoothRunners::calcTaperedSegmentPixel(
-  u8 numSegmentPixels, u8 pos, const Color& centerColor)
+    u8 numSegmentPixels, u8 pos, const Color& centerColor)
 {
   if (pos == 0 || pos == numSegmentPixels + 1) {
     return Color(0);
@@ -222,12 +217,12 @@ Color Ws281xEffectSmoothRunners::calcTaperedSegmentPixel(
   }
 
   return Color(
-    (u8)(rStep * segmentIndex), (u8)(gStep * segmentIndex),
-    (u8)(bStep * segmentIndex));
+      (u8)(rStep * segmentIndex), (u8)(gStep * segmentIndex),
+      (u8)(bStep * segmentIndex));
 }
 
 void Ws281xEffectSmoothRunners::addPixelColor(
-  u16 pixelPos, const Color& addColor)
+    u16 pixelPos, const Color& addColor)
 {
   Color c = pixels_.get(pixelPos);
   c.additiveMix(addColor);

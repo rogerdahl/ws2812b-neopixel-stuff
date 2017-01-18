@@ -37,8 +37,8 @@ const PixelLayout PIXEL_LAYOUT = Ring;
 // const PixelLayout PIXEL_LAYOUT = Grid;
 
 static void errorCallback(int error, const char* description);
-static void
-keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+static void keyCallback(
+    GLFWwindow* window, int key, int scancode, int action, int mods);
 void drawLeds(ColorVec& leds);
 void drawLedStrip(ColorVec& leds);
 void drawLedRing(ColorVec& leds);
@@ -52,8 +52,8 @@ int main()
   glfwInit();
   glfwSetErrorCallback(errorCallback);
 
-  GLFWwindow* window
-    = glfwCreateWindow(WINDOW_W, WINDOW_H, "NeoPixel Emulator", NULL, NULL);
+  GLFWwindow* window =
+      glfwCreateWindow(WINDOW_W, WINDOW_H, "NeoPixel Emulator", NULL, NULL);
   if (!window) {
     glfwTerminate();
     return 1;
@@ -85,16 +85,15 @@ int main()
   Ws281xStringEmu emu(leds);
 
   Ws281xEffectColorFade colorFadeEffect(
-    emu, 1 /* fadeSpeed */, 1 /* fadeStep */);
-  Ws281xEffectEmergency emergencyEffect(
-    emu, 1 /* numSections */, 1 /* param */);
+      emu, 1 /* fadeSpeed */, 1 /* fadeStep */);
+  Ws281xEffectEmergency emergencyEffect(emu, 1 /* numSections */, 1 /* param */);
   Ws281xEffectHsvScroll hsvScrollEffect(
-    emu, 1.0f /* scrollSpeed */, 1.0f /* scrollStep */);
+      emu, 1.0f /* scrollSpeed */, 1.0f /* scrollStep */);
   Ws281xEffectSmoothRunners SmoothRunnersEffect(emu, 0, 4);
   Ws281xEffectXmasTwinkles xmasTwinklesEffect(emu);
 
-  Ws281xEffectShimmer* shimmerEffect
-    = new Ws281xEffectShimmer(emu, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+  Ws281xEffectShimmer* shimmerEffect =
+      new Ws281xEffectShimmer(emu, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
   int m = 1000;
   int c = 0;
@@ -111,10 +110,10 @@ int main()
       delete shimmerEffect;
 
       shimmerEffect = new Ws281xEffectShimmer(
-        emu, 0.0f, 1.0f, // brightness
-        0.01f, 0.02f, // speed
-        minHsv, maxHsv // hsv
-        );
+          emu, 0.0f, 1.0f, // brightness
+          0.01f, 0.02f, // speed
+          minHsv, maxHsv // hsv
+          );
     }
 
     shimmerEffect->refresh();
@@ -168,8 +167,8 @@ void drawLedStrip(ColorVec& leds)
   for (int x = 0; x < static_cast<int>(leds.size()); ++x) {
     auto c = leds[x];
     drawFilledCircle(
-      xCenter - size / 2.0f + (ledAndSpaceSize / 2.0f) + x * ledAndSpaceSize,
-      yCenter, ledRadius, c.r, c.g, c.b);
+        xCenter - size / 2.0f + (ledAndSpaceSize / 2.0f) + x * ledAndSpaceSize,
+        yCenter, ledRadius, c.r, c.g, c.b);
   }
 }
 
@@ -182,8 +181,8 @@ void drawLedRing(ColorVec& leds)
   float ledToSpaceRatio = 2.0f;
 
   float ledRadius = maxLedRadius;
-  float circleRadius
-    = leds.size() * (ledRadius * ledToSpaceRatio) / (2.0f * M_PI);
+  float circleRadius =
+      leds.size() * (ledRadius * ledToSpaceRatio) / (2.0f * M_PI);
   if (circleRadius > maxCircleRadius) {
     circleRadius = maxCircleRadius;
     float c = circleRadius * 2.0f * M_PI;
@@ -192,9 +191,9 @@ void drawLedRing(ColorVec& leds)
   for (int i = 0; i < static_cast<int>(leds.size()); ++i) {
     auto c = leds[i];
     drawFilledCircle(
-      xCenter + (circleRadius * cos(i * 2.0f * M_PI / leds.size())),
-      yCenter + (circleRadius * sin(i * 2.0f * M_PI / leds.size())), ledRadius,
-      c.r, c.g, c.b);
+        xCenter + (circleRadius * cos(i * 2.0f * M_PI / leds.size())),
+        yCenter + (circleRadius * sin(i * 2.0f * M_PI / leds.size())),
+        ledRadius, c.r, c.g, c.b);
   }
 }
 
@@ -231,11 +230,11 @@ void drawLedGrid(ColorVec& leds)
         c = leds[numLedsX - x - 1 + y * numLedsX];
       }
       drawFilledCircle(
-        xCenter - dimSize / 2.0f + (ledAndSpaceSize / 2.0f)
-          + x * ledAndSpaceSize,
-        yCenter - dimSize / 2.0f + (ledAndSpaceSize / 2.0f)
-          + y * ledAndSpaceSize,
-        ledRadius, c.r, c.g, c.b);
+          xCenter - dimSize / 2.0f + (ledAndSpaceSize / 2.0f)
+              + x * ledAndSpaceSize,
+          yCenter - dimSize / 2.0f + (ledAndSpaceSize / 2.0f)
+              + y * ledAndSpaceSize,
+          ledRadius, c.r, c.g, c.b);
     }
   }
 }
@@ -254,8 +253,7 @@ void errorCallback(int error, const char* description)
   fprintf(stderr, "Error: %s\n", description);
 }
 
-void keyCallback(
-  GLFWwindow* window, int key, int scancode, int action, int mods)
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);

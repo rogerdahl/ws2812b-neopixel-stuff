@@ -21,8 +21,8 @@ class Ws281xEffectShimmer : public Ws281xEffect
 {
   public:
   Ws281xEffectShimmer(
-    Ws281xString& pixels, float minBrightness, float maxBrightness,
-    float minSpeed, float maxSpeed, float minHsv, float maxHsv);
+      Ws281xString& pixels, float minBrightness, float maxBrightness,
+      float minSpeed, float maxSpeed, float minHsv, float maxHsv);
   void refresh();
 
   private:

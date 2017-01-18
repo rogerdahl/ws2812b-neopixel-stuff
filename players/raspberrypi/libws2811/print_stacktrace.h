@@ -10,8 +10,8 @@
 #include <stdlib.h>
 
 /** Print a demangled stack backtrace of the caller function to FILE* out. */
-static inline void
-print_stacktrace(FILE* out = stderr, unsigned int max_frames = 63)
+static inline void print_stacktrace(
+    FILE* out = stderr, unsigned int max_frames = 63)
 {
   fprintf(out, "stack trace:\n");
 
@@ -64,8 +64,8 @@ print_stacktrace(FILE* out = stderr, unsigned int max_frames = 63)
       // __cxa_demangle():
 
       int status;
-      char* ret
-        = abi::__cxa_demangle(begin_name, funcname, &funcnamesize, &status);
+      char* ret =
+          abi::__cxa_demangle(begin_name, funcname, &funcnamesize, &status);
       if (status == 0) {
         funcname = ret; // use possibly realloc()-ed string
         fprintf(out, "  %s : %s+%s\n", symbollist[i], funcname, begin_offset);
@@ -74,7 +74,7 @@ print_stacktrace(FILE* out = stderr, unsigned int max_frames = 63)
         // demangling failed. Output function name as a C function with
         // no arguments.
         fprintf(
-          out, "  %s : %s()+%s\n", symbollist[i], begin_name, begin_offset);
+            out, "  %s : %s()+%s\n", symbollist[i], begin_name, begin_offset);
       }
     }
     else {

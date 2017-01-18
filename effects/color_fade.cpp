@@ -4,13 +4,13 @@
 #include "util.h"
 
 Ws281xEffectColorFade::Ws281xEffectColorFade(
-  Ws281xString& pixels, u8 fadeSpeed, u8 fadeStep)
-  : pixels_(pixels)
-  , fadeSpeed_(fadeSpeed)
-  , fadeStep_(fadeStep)
-  , curColor_(Color((u8)0, (u8)0, (u8)0))
-  , targetColor_(Color((u8)0, (u8)0, (u8)0))
-  , fadeCur_(0)
+    Ws281xString& pixels, u8 fadeSpeed, u8 fadeStep)
+  : pixels_(pixels),
+    fadeSpeed_(fadeSpeed),
+    fadeStep_(fadeStep),
+    curColor_(Color((u8)0, (u8)0, (u8)0)),
+    targetColor_(Color((u8)0, (u8)0, (u8)0)),
+    fadeCur_(0)
 {
 }
 

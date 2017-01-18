@@ -12,11 +12,8 @@ const u16 numOffFrames = 2;
 const u16 numCyclesPerColor = 6;
 
 Ws281xEffectEmergency::Ws281xEffectEmergency(
-  Ws281xString& pixels, u8 numSections, u8 param)
-  : pixels_(pixels)
-  , numSections_(numSections)
-  , param_(param)
-  , numCurFrame(0)
+    Ws281xString& pixels, u8 numSections, u8 param)
+  : pixels_(pixels), numSections_(numSections), param_(param), numCurFrame(0)
 {
   numPixelsPerSection_ = pixels_.len() / numSections;
 }

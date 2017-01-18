@@ -76,8 +76,8 @@ typedef struct
 
 #define GPIO_OFFSET (0x00200000)
 
-static inline void
-gpio_function_set(volatile gpio_t* gpio, uint8_t pin, uint8_t function)
+static inline void gpio_function_set(
+    volatile gpio_t* gpio, uint8_t pin, uint8_t function)
 {
   int regnum = pin / 10;
   int offset = (pin % 10) * 3;
@@ -91,8 +91,8 @@ gpio_function_set(volatile gpio_t* gpio, uint8_t pin, uint8_t function)
   gpio->fsel[regnum] |= ((funcmap[function]) << offset);
 }
 
-static inline void
-gpio_level_set(volatile gpio_t* gpio, uint8_t pin, uint8_t level)
+static inline void gpio_level_set(
+    volatile gpio_t* gpio, uint8_t pin, uint8_t level)
 {
   int regnum = pin >> 5;
   int offset = (pin & 0x1f);
@@ -105,8 +105,8 @@ gpio_level_set(volatile gpio_t* gpio, uint8_t pin, uint8_t level)
   }
 }
 
-static inline void
-gpio_output_set(volatile gpio_t* gpio, uint8_t pin, uint8_t output)
+static inline void gpio_output_set(
+    volatile gpio_t* gpio, uint8_t pin, uint8_t output)
 {
   int regnum = pin / 10;
   int offset = (pin % 10) * 3;

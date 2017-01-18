@@ -101,7 +101,8 @@ Color fromHsv(float h, float s, float v)
   //  assert(s >= 0.0f && s <= 1.0f);
   //  assert(v >= 0.0f && v <= 1.0f);
 
-  h = clamp(h, 0.0f, 360.0f);
+  h = fmodf(h, 360.0f);
+  //  h = clamp(h, 0.0f, 360.0f);
   s = clamp(s, 0.0f, 1.0f);
   v = clamp(v, 0.0f, 1.0f);
 
@@ -129,9 +130,9 @@ Color fromHsv(float h, float s, float v)
 Color colorWeightedAvg(const Color& c1, const Color& c2, u8 weight)
 {
   return Color(
-    channelWeightedAvg(c1.r, c2.r, weight),
-    channelWeightedAvg(c1.g, c2.g, weight),
-    channelWeightedAvg(c1.b, c2.b, weight));
+      channelWeightedAvg(c1.r, c2.r, weight),
+      channelWeightedAvg(c1.g, c2.g, weight),
+      channelWeightedAvg(c1.b, c2.b, weight));
 }
 
 u8 channelWeightedAvg(u8 a, u8 b, u8 weight)
@@ -155,7 +156,7 @@ float random_f(float min, float max)
 {
   return min
          + static_cast<float>(rand())
-             / (static_cast<float>(RAND_MAX / (max - min)));
+               / (static_cast<float>(RAND_MAX / (max - min)));
 }
 
 float random_norm_f()

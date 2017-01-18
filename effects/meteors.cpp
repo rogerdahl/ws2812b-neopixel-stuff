@@ -6,7 +6,7 @@
 //#define NEOPIXEL_PIN 1
 //
 //// We use "pixel" to refer to a single WS2812B package, which contains three
-///LEDs (red, green and blue).
+/// LEDs (red, green and blue).
 //
 //// Select number of pixels.
 //#define NUM_PIXELS 60

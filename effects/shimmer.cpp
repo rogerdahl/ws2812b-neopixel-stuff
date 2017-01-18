@@ -6,32 +6,25 @@
 
 #include <cmath>
 
-PixelState::PixelState()
-  : pos(10.0f)
-  , brightness(0.0f)
-  , speed(0.0f)
-  , hsv(0.0f)
+PixelState::PixelState() : pos(10.0f), brightness(0.0f), speed(0.0f), hsv(0.0f)
 {
 }
 
 PixelState::PixelState(float brightness, float speed, float hsv)
-  : pos(0.0f)
-  , brightness(brightness)
-  , speed(speed)
-  , hsv(hsv)
+  : pos(0.0f), brightness(brightness), speed(speed), hsv(hsv)
 {
 }
 
 Ws281xEffectShimmer::Ws281xEffectShimmer(
-  Ws281xString& pixels, float minBrightness, float maxBrightness,
-  float minSpeed, float maxSpeed, float minHsv, float maxHsv)
-  : pixels_(pixels)
-  , minBrightness_(minBrightness)
-  , maxBrightness_(maxBrightness)
-  , minSpeed_(minSpeed)
-  , maxSpeed_(maxSpeed)
-  , minHsv_(minHsv)
-  , maxHsv_(maxHsv)
+    Ws281xString& pixels, float minBrightness, float maxBrightness,
+    float minSpeed, float maxSpeed, float minHsv, float maxHsv)
+  : pixels_(pixels),
+    minBrightness_(minBrightness),
+    maxBrightness_(maxBrightness),
+    minSpeed_(minSpeed),
+    maxSpeed_(maxSpeed),
+    minHsv_(minHsv),
+    maxHsv_(maxHsv)
 {
   pixelStateVec_ = PixelStateVec(pixels.len());
 }

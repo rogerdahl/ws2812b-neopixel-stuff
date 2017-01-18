@@ -1,7 +1,6 @@
 #include "emu.h"
 
-Ws281xStringEmu::Ws281xStringEmu(ColorVec& leds)
-  : leds(leds)
+Ws281xStringEmu::Ws281xStringEmu(ColorVec& leds) : leds(leds)
 {
 }
 

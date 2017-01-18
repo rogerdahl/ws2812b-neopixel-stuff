@@ -6,24 +6,16 @@ Color::Color()
 {
 }
 
-Color::Color(u8 r_in, u8 g_in, u8 b_in)
-  : r(r_in)
-  , g(g_in)
-  , b(b_in)
+Color::Color(u8 r_in, u8 g_in, u8 b_in) : r(r_in), g(g_in), b(b_in)
 {
 }
 
-Color::Color(int r_in, int g_in, int b_in)
-  : r(r_in)
-  , g(g_in)
-  , b(b_in)
+Color::Color(int r_in, int g_in, int b_in) : r(r_in), g(g_in), b(b_in)
 {
 }
 
 Color::Color(float r_in, float g_in, float b_in)
-  : r(r_in * 255)
-  , g(g_in * 255)
-  , b(b_in * 255)
+  : r(r_in * 255), g(g_in * 255), b(b_in * 255)
 {
   //    print_stacktrace();
 }
@@ -110,13 +102,13 @@ Color Color::clampBrightness(const Color& c, u16 clamp)
   }
   float clamp_factor = (float)clamp / combined;
   return Color(
-    (u8)(c.r * clamp_factor), (u8)(c.g * clamp_factor),
-    (u8)(c.b * clamp_factor));
+      (u8)(c.r * clamp_factor), (u8)(c.g * clamp_factor),
+      (u8)(c.b * clamp_factor));
 }
 
 Color Color::dimLightOutput(const Color& c, float light_factor)
 {
   return Color(
-    (u8)(c.r * light_factor), (u8)(c.g * light_factor),
-    (u8)(c.b * light_factor));
+      (u8)(c.r * light_factor), (u8)(c.g * light_factor),
+      (u8)(c.b * light_factor));
 }

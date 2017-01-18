@@ -6,11 +6,11 @@
 // Spin around the HSV wheel.
 
 Ws281xEffectHsvScroll::Ws281xEffectHsvScroll(
-  Ws281xString& pixels, float scrollSpeed, float scrollStep)
-  : pixels_(pixels)
-  , scrollSpeed_(scrollSpeed)
-  , scrollStep_(scrollStep)
-  , scrollPos_(0.0f)
+    Ws281xString& pixels, float scrollSpeed, float scrollStep)
+  : pixels_(pixels),
+    scrollSpeed_(scrollSpeed),
+    scrollStep_(scrollStep),
+    scrollPos_(0.0f)
 {
 }
 

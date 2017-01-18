@@ -155,17 +155,17 @@ int main(int argc, char** argv)
 
     v.clear();
 
-    float hsvWidth = random_f(0.0f, 310.0f);
-    float limitHsv = 319.9f - hsvWidth;
-    float minHsv = random_f(0.0f, limitHsv);
+    float hsvWidth = random_f(0.0f, 360.0f / 2.0f);
+//    float limitHsv = 319.9f - hsvWidth;
+    float minHsv = random_f(0.0f, 2.0f * 360.0f);
     float maxHsv = minHsv + hsvWidth;
 
     for (int j = 0; j < 4; ++j) {
       auto shimmerEffect = new Ws281xEffectShimmer(
-        strip, 0.0f, 1.0f, // brightness
-        0.01f, 0.02f, // speed
-        minHsv, maxHsv // hsv
-        );
+          strip, 0.0f, 1.0f, // brightness
+          0.01f, 0.02f, // speed
+          minHsv, maxHsv // hsv
+          );
       v.push_back(shimmerEffect);
     }
 
@@ -180,11 +180,11 @@ int main(int argc, char** argv)
     }
     runEffectVec(v, strip, runSec);
 
-    // Slow color fade.
+    // Slow color fade
     Ws281xEffectColorFade effectColorFade0(strip, 5, 1);
     runEffectCopy(effectColorFade0, runSec);
 
-    // Fast color fade.
+    // Fast color fade
     Ws281xEffectColorFade effectColorFade1(strip, 1, 2);
     runEffectCopy(effectColorFade1, runSec);
 
@@ -323,19 +323,19 @@ void selectAllLines()
 void clampLight(u8 stringIdx, int clamp)
 {
   for (int i = 0; i < NUM_LEDS; ++i) {
-    leds.channel[stringIdx].leds[i]
-      = Color::clampBrightness(Color(leds.channel[stringIdx].leds[i]), clamp)
-          .rgb();
+    leds.channel[stringIdx].leds[i] =
+        Color::clampBrightness(Color(leds.channel[stringIdx].leds[i]), clamp)
+            .rgb();
   }
 }
 
 void dimLight(u8 stringIdx, float light_factor)
 {
   for (int i = 0; i < NUM_LEDS; ++i) {
-    leds.channel[stringIdx].leds[i]
-      = Color::dimLightOutput(
-          Color(leds.channel[stringIdx].leds[i]), light_factor)
-          .rgb();
+    leds.channel[stringIdx].leds[i] =
+        Color::dimLightOutput(
+            Color(leds.channel[stringIdx].leds[i]), light_factor)
+            .rgb();
   }
 }
 
